@@ -2,13 +2,11 @@ package com.gynguide.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Usuario {
@@ -26,6 +24,39 @@ public abstract class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoUsuario tipoUsuario;
+    
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public String getSenha() {
+        return senha;
+    }
+    
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+    
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
     
     public enum TipoUsuario {
         PESSOA_FISICA,

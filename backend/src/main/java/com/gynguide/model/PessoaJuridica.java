@@ -2,14 +2,10 @@ package com.gynguide.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pessoas_juridicas")
-@Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class PessoaJuridica extends Usuario {
@@ -25,5 +21,38 @@ public class PessoaJuridica extends Usuario {
     
     @Column(nullable = false)
     private String endereco;
+    
+    // Getters e Setters
+    public String getNomeFantasia() {
+        return nomeFantasia;
+    }
+    
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
+    }
+    
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+    
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+    
+    public String getCnpj() {
+        return cnpj;
+    }
+    
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+    
+    public String getEndereco() {
+        return endereco;
+    }
+    
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 }
 
