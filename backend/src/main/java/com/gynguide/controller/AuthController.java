@@ -40,7 +40,7 @@ public class AuthController {
         }
     }
     
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
             UsuarioResponse response = authService.login(request);
