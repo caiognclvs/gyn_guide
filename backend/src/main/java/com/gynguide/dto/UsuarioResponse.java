@@ -1,9 +1,7 @@
 package com.gynguide.dto;
 
 import com.gynguide.model.Usuario;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class UsuarioResponse {

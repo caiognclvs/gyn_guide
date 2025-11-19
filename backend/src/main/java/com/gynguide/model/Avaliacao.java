@@ -45,5 +45,53 @@ public class Avaliacao {
     protected void onCreate() {
         dataAvaliacao = LocalDateTime.now();
     }
+
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getTexto() {
+        return texto;
+    }
+    
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+    
+    public Integer getNota() {
+        return nota;
+    }
+    
+    public void setNota(Integer nota) {
+        this.nota = nota;
+    }
+    
+    public LocalDateTime getDataAvaliacao() {
+        return dataAvaliacao;
+    }
+    
+    public void setDataAvaliacao(LocalDateTime dataAvaliacao) {
+        this.dataAvaliacao = dataAvaliacao;
+    }
+    
+    public PessoaFisica getAutor() {
+        return autor;
+    }
+    
+    public void setAutor(PessoaFisica autor) {
+        this.autor = autor;
+    }
+    
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
+    
+    public void setEstabelecimento(Estabelecimento estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
 }
 

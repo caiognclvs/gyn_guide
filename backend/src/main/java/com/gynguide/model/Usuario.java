@@ -25,7 +25,6 @@ public abstract class Usuario {
     @Column(nullable = false)
     private TipoUsuario tipoUsuario;
     
-    // Getters e Setters
     public Long getId() {
         return id;
     }

@@ -18,7 +18,6 @@ public class PessoaFisica extends Usuario {
     @Column(nullable = false)
     private LocalDate dataNascimento;
     
-    // Getters e Setters
     public String getNome() {
         return nome;
     }

@@ -22,7 +22,6 @@ public class PessoaJuridica extends Usuario {
     @Column(nullable = false)
     private String endereco;
     
-    // Getters e Setters
     public String getNomeFantasia() {
         return nomeFantasia;
     }
