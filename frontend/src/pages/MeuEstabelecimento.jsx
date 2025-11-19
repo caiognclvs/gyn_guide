@@ -14,6 +14,8 @@ function MeuEstabelecimento() {
     descricao: '',
     imagemUrl: ''
   })
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [previewUrl, setPreviewUrl] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const navigate = useNavigate()
@@ -66,6 +68,36 @@ function MeuEstabelecimento() {
     })
   }
 
+  const handleFileChange = (file) => {
+    if (!file) return
+    setSelectedFile(file)
+    setPreviewUrl(URL.createObjectURL(file))
+    // clear any imagemUrl string when a file is chosen
+    setFormData(prev => ({ ...prev, imagemUrl: '' }))
+  }
+
+  const onFileInputChange = (e) => {
+    const file = e.target.files && e.target.files[0]
+    if (file) handleFileChange(file)
+  }
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null)
+    setPreviewUrl('')
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const file = e.dataTransfer.files && e.dataTransfer.files[0]
+    if (file) handleFileChange(file)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -74,8 +106,19 @@ function MeuEstabelecimento() {
     try {
       const endpoint = `/estabelecimentos/meu-estabelecimento/${usuario.id}`
       const method = estabelecimento ? 'put' : 'post'
-      
-      const response = await api[method](endpoint, formData)
+      // Monta FormData para suportar upload de arquivo
+      const payload = new FormData()
+      payload.append('nome', formData.nome)
+      payload.append('endereco', formData.endereco)
+      if (formData.descricao) payload.append('descricao', formData.descricao)
+      // Se o usuário escolheu um arquivo envia como 'imagem', caso contrário envia imagemUrl (pode estar vazio)
+      if (selectedFile) {
+        payload.append('imagem', selectedFile)
+      } else if (formData.imagemUrl) {
+        payload.append('imagemUrl', formData.imagemUrl)
+      }
+
+      const response = await api[method](endpoint, payload)
       setEstabelecimento(response.data)
       setEditando(false)
       setSuccess(estabelecimento ? 'Estabelecimento atualizado com sucesso!' : 'Estabelecimento criado com sucesso!')
@@ -198,6 +241,34 @@ function MeuEstabelecimento() {
                 onChange={handleChange}
                 placeholder="https://exemplo.com/imagem.jpg"
               />
+              <div style={{ marginTop: '12px' }}>
+                <label style={{ display: 'block', marginBottom: '8px' }}>Ou envie uma imagem (arraste e solte)</label>
+                <div
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  style={{
+                    border: '2px dashed #ccc',
+                    padding: '18px',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {previewUrl ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <img src={previewUrl} alt="preview" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '6px', marginBottom: '8px', objectFit: 'cover' }} />
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button type="button" className="btn btn-secondary" onClick={handleRemoveFile}>Remover</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <p style={{ margin: 0, color: '#666' }}>Arraste um arquivo aqui ou clique para selecionar</p>
+                      <input type="file" accept="image/*" onChange={onFileInputChange} style={{ marginTop: '12px' }} />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
               <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>

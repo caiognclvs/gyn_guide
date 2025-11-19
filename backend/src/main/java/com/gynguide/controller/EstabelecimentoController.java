@@ -6,8 +6,10 @@ import com.gynguide.dto.EstabelecimentoResponse;
 import com.gynguide.service.EstabelecimentoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -43,24 +45,34 @@ public class EstabelecimentoController {
         }
     }
     
-    @PostMapping("/meu-estabelecimento/{proprietarioId}")
+    @PostMapping(value = "/meu-estabelecimento/{proprietarioId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> criarOuAtualizarEstabelecimento(
             @PathVariable Long proprietarioId,
-            @Valid @RequestBody EstabelecimentoRequest request) {
+            @RequestParam("nome") String nome,
+            @RequestParam("endereco") String endereco,
+            @RequestParam(value = "descricao", required = false) String descricao,
+            @RequestParam(value = "imagemUrl", required = false) String imagemUrl,
+            @RequestParam(value = "imagem", required = false) MultipartFile imagem) {
         try {
-            EstabelecimentoDetalhesResponse response = estabelecimentoService.criarOuAtualizarEstabelecimento(proprietarioId, request);
+            EstabelecimentoRequest request = new EstabelecimentoRequest(nome, endereco, descricao, imagemUrl);
+            EstabelecimentoDetalhesResponse response = estabelecimentoService.criarOuAtualizarEstabelecimento(proprietarioId, request, imagem);
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    
-    @PutMapping("/meu-estabelecimento/{proprietarioId}")
+
+    @PutMapping(value = "/meu-estabelecimento/{proprietarioId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> atualizarEstabelecimento(
             @PathVariable Long proprietarioId,
-            @Valid @RequestBody EstabelecimentoRequest request) {
+            @RequestParam("nome") String nome,
+            @RequestParam("endereco") String endereco,
+            @RequestParam(value = "descricao", required = false) String descricao,
+            @RequestParam(value = "imagemUrl", required = false) String imagemUrl,
+            @RequestParam(value = "imagem", required = false) MultipartFile imagem) {
         try {
-            EstabelecimentoDetalhesResponse response = estabelecimentoService.criarOuAtualizarEstabelecimento(proprietarioId, request);
+            EstabelecimentoRequest request = new EstabelecimentoRequest(nome, endereco, descricao, imagemUrl);
+            EstabelecimentoDetalhesResponse response = estabelecimentoService.criarOuAtualizarEstabelecimento(proprietarioId, request, imagem);
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

@@ -10,9 +10,15 @@ import com.gynguide.repository.PessoaJuridicaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class EstabelecimentoService {
@@ -114,6 +120,38 @@ public class EstabelecimentoService {
         estabelecimento = estabelecimentoRepository.save(estabelecimento);
         
         return converterParaDetalhesResponse(estabelecimento);
+    }
+
+    @Transactional
+    public EstabelecimentoDetalhesResponse criarOuAtualizarEstabelecimento(Long proprietarioId, EstabelecimentoRequest request, MultipartFile imagem) {
+        // Se houver um arquivo enviado, salva no filesystem e define imagemUrl
+        if (imagem != null && !imagem.isEmpty()) {
+            try {
+                Path uploadsDir = Paths.get("./data/uploads");
+                if (!Files.exists(uploadsDir)) {
+                    Files.createDirectories(uploadsDir);
+                }
+
+                String original = imagem.getOriginalFilename();
+                String extension = "";
+                if (original != null && original.contains(".")) {
+                    extension = original.substring(original.lastIndexOf('.'));
+                }
+                String filename = UUID.randomUUID().toString() + extension;
+                Path target = uploadsDir.resolve(filename);
+                // salva o arquivo
+                imagem.transferTo(target.toFile());
+
+                // Define a URL pública para acessar o arquivo
+                String fileUrl = "http://localhost:8080/uploads/" + filename;
+                request.setImagemUrl(fileUrl);
+            } catch (IOException e) {
+                throw new RuntimeException("Erro ao salvar imagem: " + e.getMessage(), e);
+            }
+        }
+
+        // Reaproveita o fluxo existente
+        return criarOuAtualizarEstabelecimento(proprietarioId, request);
     }
     
     private EstabelecimentoDetalhesResponse converterParaDetalhesResponse(Estabelecimento estabelecimento) {

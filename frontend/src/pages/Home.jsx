@@ -183,7 +183,7 @@ function Home() {
                 </div>
               </div>
               <div style={{ padding: '20px' }}>
-                <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>
+                <h3 style={{ margin: '0 0 10px 0', color: '#000000ff' }}>
                   {estabelecimento.nome}
                 </h3>
                 {estabelecimento.nomeFantasia && (
