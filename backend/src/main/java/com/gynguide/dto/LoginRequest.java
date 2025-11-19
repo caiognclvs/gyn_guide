@@ -2,13 +2,9 @@ package com.gynguide.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class LoginRequest {
     
     @NotBlank(message = "Email é obrigatório")
@@ -17,6 +13,11 @@ public class LoginRequest {
     
     @NotBlank(message = "Senha é obrigatória")
     private String senha;
+
+    public LoginRequest(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
 
     public String getEmail() {
         return email;

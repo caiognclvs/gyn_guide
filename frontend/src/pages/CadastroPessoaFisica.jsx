@@ -27,7 +27,7 @@ function CadastroPessoaFisica() {
     setSuccess('')
 
     try {
-      const response = await api.post('/auth/cadastro/pessoa-fisica', {
+      const response = await api.post('auth/cadastro/pessoa-fisica', {
         ...formData,
         dataNascimento: formData.dataNascimento
       })

@@ -2,11 +2,13 @@ package com.gynguide.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Usuario {

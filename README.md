@@ -46,9 +46,10 @@ gyn_guide/
    ```
 4. O backend estará disponível em `http://localhost:8080`
 5. Console H2 disponível em `http://localhost:8080/h2-console`
-   - JDBC URL: `jdbc:h2:mem:gyn_guide_db`
+   - JDBC URL: `jdbc:h2:file:./data/gyn_guide_db`
    - Username: `sa`
    - Password: (vazio)
+6. Os dados serão armazenados em arquivo na pasta `backend/data/` (persistência permanente)
 
 ### Frontend
 
@@ -111,7 +112,7 @@ Você também pode usar os endpoints da API para listar os usuários:
 - **Listar Pessoas Físicas**: `GET http://localhost:8080/api/usuarios/pessoas-fisicas`
 - **Listar Pessoas Jurídicas**: `GET http://localhost:8080/api/usuarios/pessoas-juridicas`
 
-**Nota**: Como o banco H2 está configurado em memória (`jdbc:h2:mem:gyn_guide_db`), os dados são perdidos quando a aplicação é encerrada. Para persistência permanente, seria necessário alterar a configuração para usar um arquivo.
+**Nota**: O banco H2 está configurado para usar arquivo (`jdbc:h2:file:./data/gyn_guide_db`), então os dados são persistidos permanentemente na pasta `backend/data/`. Os dados não são perdidos quando a aplicação é encerrada.
 
 ## Modelos de Dados
 
