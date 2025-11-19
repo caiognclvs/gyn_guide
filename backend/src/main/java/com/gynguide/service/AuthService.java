@@ -10,17 +10,21 @@ import com.gynguide.model.Usuario;
 import com.gynguide.repository.PessoaFisicaRepository;
 import com.gynguide.repository.PessoaJuridicaRepository;
 import com.gynguide.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class AuthService {
     
     private final UsuarioRepository usuarioRepository;
     private final PessoaFisicaRepository pessoaFisicaRepository;
     private final PessoaJuridicaRepository pessoaJuridicaRepository;
+    
+    public AuthService(UsuarioRepository usuarioRepository, PessoaFisicaRepository pessoaFisicaRepository, PessoaJuridicaRepository pessoaJuridicaRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.pessoaFisicaRepository = pessoaFisicaRepository;
+        this.pessoaJuridicaRepository = pessoaJuridicaRepository;
+    }
     
     @Transactional
     public UsuarioResponse cadastrarPessoaFisica(CadastroPessoaFisicaRequest request) {

@@ -1,14 +1,19 @@
 package com.gynguide.dto;
 
 import com.gynguide.model.PessoaJuridica;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class PessoaJuridicaResponse {
+    public PessoaJuridicaResponse(Long id, String email, String nomeFantasia, String razaoSocial, String cnpj, String endereco) {
+        this.id = id;
+        this.email = email;
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+    }
+    
     private Long id;
     private String email;
     private String nomeFantasia;

@@ -6,19 +6,20 @@ import com.gynguide.dto.LoginRequest;
 import com.gynguide.dto.UsuarioResponse;
 import com.gynguide.service.AuthService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
-    
     private final AuthService authService;
-    
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
     @PostMapping("/cadastro/pessoa-fisica")
     public ResponseEntity<?> cadastrarPessoaFisica(@Valid @RequestBody CadastroPessoaFisicaRequest request) {
         try {

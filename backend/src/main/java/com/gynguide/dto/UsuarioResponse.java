@@ -6,9 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UsuarioResponse {
+    public UsuarioResponse(Long id, String email, Usuario.TipoUsuario tipoUsuario) {
+        this.id = id;
+        this.email = email;
+        this.tipoUsuario = tipoUsuario;
+    }
+
     private Long id;
     private String email;
     private Usuario.TipoUsuario tipoUsuario;

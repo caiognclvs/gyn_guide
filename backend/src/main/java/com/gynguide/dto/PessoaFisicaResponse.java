@@ -1,16 +1,19 @@
 package com.gynguide.dto;
 
 import com.gynguide.model.PessoaFisica;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class PessoaFisicaResponse {
+    public PessoaFisicaResponse(Long id, String email, String nome, LocalDate dataNascimento) {
+        this.id = id;
+        this.email = email;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
+
     private Long id;
     private String email;
     private String nome;

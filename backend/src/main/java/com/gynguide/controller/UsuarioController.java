@@ -3,7 +3,6 @@ package com.gynguide.controller;
 import com.gynguide.dto.PessoaFisicaResponse;
 import com.gynguide.dto.PessoaJuridicaResponse;
 import com.gynguide.service.UsuarioService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class UsuarioController {
-    
     private final UsuarioService usuarioService;
-    
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
     @GetMapping("/pessoas-fisicas")
     public ResponseEntity<List<PessoaFisicaResponse>> listarPessoasFisicas() {
         List<PessoaFisicaResponse> pessoas = usuarioService.listarPessoasFisicas();
