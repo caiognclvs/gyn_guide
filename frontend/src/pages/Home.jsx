@@ -89,6 +89,15 @@ function Home() {
           >
             Meu Perfil
           </button>
+          {usuario.tipoUsuario === 'PESSOA_JURIDICA' && (
+            <button 
+              onClick={() => navigate('/meu-estabelecimento')} 
+              className="btn btn-secondary" 
+              style={{ width: 'auto', padding: '8px 20px' }}
+            >
+              Meu Estabelecimento
+            </button>
+          )}
           <button onClick={handleLogout} className="btn btn-secondary" style={{ width: 'auto', padding: '8px 20px' }}>
             Sair
           </button>

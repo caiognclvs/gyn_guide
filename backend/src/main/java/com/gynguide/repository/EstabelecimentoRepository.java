@@ -13,5 +13,8 @@ public interface EstabelecimentoRepository extends JpaRepository<Estabelecimento
     
     @Query("SELECT DISTINCT e FROM Estabelecimento e LEFT JOIN FETCH e.avaliacoes LEFT JOIN FETCH e.proprietario")
     List<Estabelecimento> findAllWithAvaliacoes();
+    
+    @Query("SELECT e FROM Estabelecimento e LEFT JOIN FETCH e.avaliacoes LEFT JOIN FETCH e.proprietario")
+    List<Estabelecimento> findAllWithAvaliacoesAndProprietario();
 }
 
