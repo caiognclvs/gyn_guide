@@ -75,6 +75,44 @@ gyn_guide/
 - `POST /api/auth/cadastro/pessoa-juridica` - Cadastro de pessoa jurídica
 - `POST /api/auth/login` - Login
 
+### Usuários
+
+- `GET /api/usuarios/pessoas-fisicas` - Lista todas as pessoas físicas cadastradas
+- `GET /api/usuarios/pessoas-juridicas` - Lista todas as pessoas jurídicas cadastradas
+
+## Visualizando os Dados
+
+Os dados dos usuários cadastrados ficam armazenados no banco de dados H2 (em memória). Existem duas formas de visualizá-los:
+
+### 1. Console H2 (Recomendado)
+
+1. Com o backend rodando, acesse: `http://localhost:8080/h2-console`
+2. Preencha os campos:
+   - **JDBC URL**: `jdbc:h2:mem:gyn_guide_db`
+   - **Username**: `sa`
+   - **Password**: (deixe vazio)
+3. Clique em "Connect"
+4. Você poderá visualizar e consultar as tabelas:
+   - `USUARIOS` - Tabela base com email, senha e tipo de usuário
+   - `PESSOAS_FISICAS` - Dados específicos de pessoas físicas (nome, data de nascimento)
+   - `PESSOAS_JURIDICAS` - Dados específicos de pessoas jurídicas (nome fantasia, razão social, CNPJ, endereço)
+
+**Exemplo de consulta SQL:**
+```sql
+SELECT * FROM USUARIOS;
+SELECT * FROM PESSOAS_FISICAS;
+SELECT * FROM PESSOAS_JURIDICAS;
+```
+
+### 2. Endpoints da API
+
+Você também pode usar os endpoints da API para listar os usuários:
+
+- **Listar Pessoas Físicas**: `GET http://localhost:8080/api/usuarios/pessoas-fisicas`
+- **Listar Pessoas Jurídicas**: `GET http://localhost:8080/api/usuarios/pessoas-juridicas`
+
+**Nota**: Como o banco H2 está configurado em memória (`jdbc:h2:mem:gyn_guide_db`), os dados são perdidos quando a aplicação é encerrada. Para persistência permanente, seria necessário alterar a configuração para usar um arquivo.
+
 ## Modelos de Dados
 
 ### Pessoa Física
