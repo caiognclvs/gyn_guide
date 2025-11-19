@@ -78,10 +78,17 @@ function Home() {
         marginBottom: '30px'
       }}>
         <h1>Gyn Guide</h1>
-        <div>
-          <span style={{ marginRight: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <span style={{ marginRight: '10px' }}>
             Olá, {usuario.email} ({usuario.tipoUsuario === 'PESSOA_FISICA' ? 'Pessoa Física' : 'Pessoa Jurídica'})
           </span>
+          <button 
+            onClick={() => navigate('/perfil')} 
+            className="btn btn-secondary" 
+            style={{ width: 'auto', padding: '8px 20px' }}
+          >
+            Meu Perfil
+          </button>
           <button onClick={handleLogout} className="btn btn-secondary" style={{ width: 'auto', padding: '8px 20px' }}>
             Sair
           </button>
