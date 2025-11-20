@@ -98,6 +98,15 @@ function Home() {
               Meu Estabelecimento
             </button>
           )}
+          {usuario.tipoUsuario === 'PESSOA_FISICA' && (
+            <button 
+              onClick={() => navigate('/minhas-avaliacoes')} 
+              className="btn btn-secondary" 
+              style={{ width: 'auto', padding: '8px 20px' }}
+            >
+              Minhas Avaliações
+            </button>
+          )}
           <button onClick={handleLogout} className="btn btn-secondary" style={{ width: 'auto', padding: '8px 20px' }}>
             Sair
           </button>
