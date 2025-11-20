@@ -7,6 +7,7 @@ function Home() {
   const [usuario, setUsuario] = useState(null)
   const [estabelecimentos, setEstabelecimentos] = useState([])
   const [loading, setLoading] = useState(true)
+  const [failedImages, setFailedImages] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -40,24 +41,17 @@ function Home() {
     if (mediaNotas === null || mediaNotas === undefined) {
       return <span style={{ color: '#999' }}>Sem avaliações</span>
     }
-    
-    const estrelasCheias = Math.floor(mediaNotas)
-    const temMeiaEstrela = mediaNotas % 1 >= 0.5
-    const estrelasVazias = 5 - estrelasCheias - (temMeiaEstrela ? 1 : 0)
-    
+
+    // Arredonda para o inteiro mais próximo entre 0 e 5
+    const rating = Math.max(0, Math.min(5, Math.round(mediaNotas)))
+
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-        {[...Array(estrelasCheias)].map((_, i) => (
-          <span key={i} style={{ color: '#FFD700', fontSize: '18px' }}>★</span>
-        ))}
-        {temMeiaEstrela && (
-          <span style={{ color: '#FFD700', fontSize: '18px' }}>U+2BE8</span>
-        )}
-        {[...Array(estrelasVazias)].map((_, i) => (
-          <span key={i} style={{ color: '#ddd', fontSize: '18px' }}>★</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        {[...Array(5)].map((_, i) => (
+          <span key={i} style={{ color: i < rating ? '#FFD700' : '#ddd', fontSize: '18px' }}>★</span>
         ))}
         <span style={{ marginLeft: '8px', color: '#666', fontSize: '14px' }}>
-          ({mediaNotas.toFixed(1)})
+          {mediaNotas !== null ? mediaNotas.toFixed(1) : '-'}
         </span>
       </div>
     )
@@ -126,83 +120,88 @@ function Home() {
           gap: '30px',
           marginBottom: '30px'
         }}>
-          {estabelecimentos.map((estabelecimento) => (
-            <div
-              key={estabelecimento.id}
-              style={{
-                background: 'white',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)'
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)'
-              }}
-            >
-              <div style={{
-                width: '100%',
-                height: '200px',
-                backgroundColor: '#f0f0f0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden'
-              }}>
-                {estabelecimento.imagemUrl ? (
-                  <img
-                    src={estabelecimento.imagemUrl}
-                    alt={estabelecimento.nome}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                    onError={(e) => {
-                      e.target.style.display = 'none'
-                      e.target.nextSibling.style.display = 'flex'
-                    }}
-                  />
-                ) : null}
+          {estabelecimentos.map((estabelecimento) => {
+            const failed = failedImages.includes(estabelecimento.id)
+            const showImage = estabelecimento.imagemUrl && !failed
+
+            return (
+              <div
+                key={estabelecimento.id}
+                style={{
+                  background: 'white',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)'
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)'
+                }}
+              >
                 <div style={{
-                  display: estabelecimento.imagemUrl ? 'none' : 'flex',
+                  width: '100%',
+                  height: '200px',
+                  backgroundColor: '#f0f0f0',
+                  display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '100%',
-                  height: '100%',
-                  fontSize: '48px',
-                  color: '#ccc'
+                  overflow: 'hidden'
                 }}>
-                  🍽️
+                  {showImage ? (
+                    <img
+                      src={estabelecimento.imagemUrl}
+                      alt={estabelecimento.nome}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                      onError={() => {
+                        setFailedImages(prev => prev.includes(estabelecimento.id) ? prev : [...prev, estabelecimento.id])
+                      }}
+                    />
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      height: '100%',
+                      fontSize: '48px',
+                      color: '#ccc'
+                    }}>
+                      🍽️
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div style={{ padding: '20px' }}>
-                <h3 style={{ margin: '0 0 10px 0', color: '#000000ff' }}>
-                  {estabelecimento.nome}
-                </h3>
-                {estabelecimento.nomeFantasia && (
-                  <p style={{ margin: '0 0 10px 0', color: '#666', fontSize: '14px' }}>
-                    {estabelecimento.nomeFantasia}
+                <div style={{ padding: '20px' }}>
+                  <h3 style={{ margin: '0 0 10px 0', color: '#000000ff' }}>
+                    {estabelecimento.nome}
+                  </h3>
+                  {estabelecimento.nomeFantasia && (
+                    <p style={{ margin: '0 0 10px 0', color: '#666', fontSize: '14px' }}>
+                      {estabelecimento.nomeFantasia}
+                    </p>
+                  )}
+                  <p style={{ margin: '0 0 15px 0', color: '#888', fontSize: '14px' }}>
+                    {estabelecimento.endereco}
                   </p>
-                )}
-                <p style={{ margin: '0 0 15px 0', color: '#888', fontSize: '14px' }}>
-                  {estabelecimento.endereco}
-                </p>
-                <div style={{ marginBottom: '10px' }}>
-                  {renderizarEstrelas(estabelecimento.mediaNotas)}
+                  <div style={{ marginBottom: '10px' }}>
+                    {renderizarEstrelas(estabelecimento.mediaNotas)}
+                  </div>
+                  <p style={{ margin: '0', color: '#666', fontSize: '14px' }}>
+                    {estabelecimento.numeroAvaliacoes} {estabelecimento.numeroAvaliacoes === 1 ? 'avaliação' : 'avaliações'}
+                  </p>
                 </div>
-                <p style={{ margin: '0', color: '#666', fontSize: '14px' }}>
-                  {estabelecimento.numeroAvaliacoes} {estabelecimento.numeroAvaliacoes === 1 ? 'avaliação' : 'avaliações'}
-                </p>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
 
