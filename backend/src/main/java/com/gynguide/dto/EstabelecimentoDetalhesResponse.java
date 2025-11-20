@@ -21,21 +21,6 @@ public class EstabelecimentoDetalhesResponse {
         this.descricao = descricao;
         this.imagemUrl = imagemUrl;
         this.nomeFantasia = nomeFantasia;
-        this.mediaNotas = null;
-        this.numeroAvaliacoes = 0L;
-        this.avaliacoes = new java.util.ArrayList<>();
-    }
-
-    public EstabelecimentoDetalhesResponse(Long id, String nome, String endereco, String descricao, String imagemUrl, String nomeFantasia, Double mediaNotas, Long numeroAvaliacoes, java.util.List<com.gynguide.dto.AvaliacaoResponse> avaliacoes) {
-        this.id = id;
-        this.nome = nome;
-        this.endereco = endereco;
-        this.descricao = descricao;
-        this.imagemUrl = imagemUrl;
-        this.nomeFantasia = nomeFantasia;
-        this.mediaNotas = mediaNotas;
-        this.numeroAvaliacoes = numeroAvaliacoes;
-        this.avaliacoes = avaliacoes;
     }
 
     public Long getId() {
@@ -86,13 +71,27 @@ public class EstabelecimentoDetalhesResponse {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public Double getMediaNotas() { return mediaNotas; }
-    public void setMediaNotas(Double mediaNotas) { this.mediaNotas = mediaNotas; }
+    public Double getMediaNotas() {
+        return mediaNotas;
+    }
 
-    public Long getNumeroAvaliacoes() { return numeroAvaliacoes; }
-    public void setNumeroAvaliacoes(Long numeroAvaliacoes) { this.numeroAvaliacoes = numeroAvaliacoes; }
+    public void setMediaNotas(Double mediaNotas) {
+        this.mediaNotas = mediaNotas;
+    }
 
-    public java.util.List<com.gynguide.dto.AvaliacaoResponse> getAvaliacoes() { return avaliacoes; }
-    public void setAvaliacoes(java.util.List<com.gynguide.dto.AvaliacaoResponse> avaliacoes) { this.avaliacoes = avaliacoes; }
+    public Long getNumeroAvaliacoes() {
+        return numeroAvaliacoes;
+    }
+
+    public void setNumeroAvaliacoes(Long numeroAvaliacoes) {
+        this.numeroAvaliacoes = numeroAvaliacoes;
+    }
+
+    public java.util.List<com.gynguide.dto.AvaliacaoResponse> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(java.util.List<com.gynguide.dto.AvaliacaoResponse> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
 }
-

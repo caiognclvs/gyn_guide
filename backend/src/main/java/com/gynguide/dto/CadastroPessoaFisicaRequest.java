@@ -6,13 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CadastroPessoaFisicaRequest {
     
     @NotBlank(message = "Email é obrigatório")
@@ -28,6 +22,15 @@ public class CadastroPessoaFisicaRequest {
     @NotNull(message = "Data de nascimento é obrigatória")
     @Past(message = "Data de nascimento deve ser no passado")
     private LocalDate dataNascimento;
+
+    public CadastroPessoaFisicaRequest() {}
+
+    public CadastroPessoaFisicaRequest(Long id, String email, String senha, String nome, LocalDate dataNascimento) {
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
 
     public String getEmail() {
         return email;

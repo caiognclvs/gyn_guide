@@ -19,6 +19,14 @@ public class PessoaJuridica extends Usuario {
     private String endereco;
 
     public PessoaJuridica() {}
+
+    public PessoaJuridica(String email, String senha, String nomeFantasia, String razaoSocial, String cnpj, String endereco) {
+        super(email, senha);
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+    }
     
     public String getNomeFantasia() {
         return nomeFantasia;

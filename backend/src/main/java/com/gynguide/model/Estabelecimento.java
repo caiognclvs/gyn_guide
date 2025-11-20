@@ -42,6 +42,14 @@ public class Estabelecimento {
 
     public Estabelecimento() {}
 
+    public Estabelecimento(String nome, String endereco, String descricao, String imagemUrl, PessoaJuridica proprietario) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.descricao = descricao;
+        this.imagemUrl = imagemUrl;
+        this.proprietario = proprietario;
+    }
+
     public String getImagemUrl() {
         return imagemUrl;
     }

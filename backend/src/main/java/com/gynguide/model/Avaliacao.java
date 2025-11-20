@@ -1,11 +1,19 @@
 package com.gynguide.model;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "avaliacoes")
@@ -41,6 +49,13 @@ public class Avaliacao {
     }
 
     public Avaliacao() {}
+
+    public Avaliacao(String texto, Integer nota, PessoaFisica autor, Estabelecimento estabelecimento) {
+        this.texto = texto;
+        this.nota = nota;
+        this.autor = autor;
+        this.estabelecimento = estabelecimento;
+    }
 
     public Long getId() {
         return id;
@@ -90,4 +105,3 @@ public class Avaliacao {
         this.estabelecimento = estabelecimento;
     }
 }
-

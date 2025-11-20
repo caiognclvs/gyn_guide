@@ -22,6 +22,15 @@ public class AtualizarPerfilPessoaFisicaRequest {
     @Past(message = "Data de nascimento deve ser no passado")
     private LocalDate dataNascimento;
 
+    public AtualizarPerfilPessoaFisicaRequest() {}
+
+    public AtualizarPerfilPessoaFisicaRequest(String email, String senha, String nome, LocalDate dataNascimento) {
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
+
     public String getEmail() {
         return email;
     }

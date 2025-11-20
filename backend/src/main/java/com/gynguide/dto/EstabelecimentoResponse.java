@@ -1,8 +1,5 @@
 package com.gynguide.dto;
 
-import lombok.Data;
-
-@Data
 public class EstabelecimentoResponse {
     private Long id;
     private String nome;
@@ -12,6 +9,8 @@ public class EstabelecimentoResponse {
     private String nomeFantasia;
     private Double mediaNotas;
     private Long numeroAvaliacoes;
+
+    public EstabelecimentoResponse() {}
     
     public EstabelecimentoResponse(Long id, String nome, String endereco, String descricao, 
                                    String imagemUrl, String nomeFantasia, Double mediaNotas, 
@@ -23,6 +22,70 @@ public class EstabelecimentoResponse {
         this.imagemUrl = imagemUrl;
         this.nomeFantasia = nomeFantasia;
         this.mediaNotas = mediaNotas;
+        this.numeroAvaliacoes = numeroAvaliacoes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
+
+    public String getNomeFantasia() {
+        return nomeFantasia;
+    }
+
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
+    }
+
+    public Double getMediaNotas() {
+        return mediaNotas;
+    }
+
+    public void setMediaNotas(Double mediaNotas) {
+        this.mediaNotas = mediaNotas;
+    }
+
+    public Long getNumeroAvaliacoes() {
+        return numeroAvaliacoes;
+    }
+
+    public void setNumeroAvaliacoes(Long numeroAvaliacoes) {
         this.numeroAvaliacoes = numeroAvaliacoes;
     }
 }

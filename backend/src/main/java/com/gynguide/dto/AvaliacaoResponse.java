@@ -19,18 +19,43 @@ public class AvaliacaoResponse {
         this.nota = nota;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getAutorNome() { return autorNome; }
-    public void setAutorNome(String autorNome) { this.autorNome = autorNome; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public LocalDateTime getDataAvaliacao() { return dataAvaliacao; }
-    public void setDataAvaliacao(LocalDateTime dataAvaliacao) { this.dataAvaliacao = dataAvaliacao; }
+    public String getAutorNome() {
+        return autorNome;
+    }
 
-    public String getTexto() { return texto; }
-    public void setTexto(String texto) { this.texto = texto; }
+    public void setAutorNome(String autorNome) {
+        this.autorNome = autorNome;
+    }
 
-    public Integer getNota() { return nota; }
-    public void setNota(Integer nota) { this.nota = nota; }
+    public LocalDateTime getDataAvaliacao() {
+        return dataAvaliacao;
+    }
+    
+    public void setDataAvaliacao(LocalDateTime dataAvaliacao) {
+        this.dataAvaliacao = dataAvaliacao;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public Integer getNota() {
+        return nota;
+    }
+
+    public void setNota(Integer nota) {
+        this.nota = nota;
+    }
 }

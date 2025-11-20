@@ -32,6 +32,7 @@ function Perfil() {
         : `/perfil/pessoa-juridica/${usuarioObj.id}`
       
       const response = await api.get(endpoint)
+      console.log('GET', endpoint, 'response.data =', response.data)
       setPerfil(response.data)
       setFormData(response.data)
     } catch (error) {
@@ -88,6 +89,9 @@ function Perfil() {
   }
 
   const isPessoaFisica = usuario.tipoUsuario === 'PESSOA_FISICA'
+
+  console.log('perfil state =', perfil)
+  console.log('formData state =', formData)
 
   return (
     <div className="container">

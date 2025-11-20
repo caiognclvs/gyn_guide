@@ -23,6 +23,18 @@ public class AtualizarPerfilPessoaJuridicaRequest {
     @NotBlank(message = "Endereço é obrigatório")
     private String endereco;
 
+    public AtualizarPerfilPessoaJuridicaRequest() {}
+
+    public AtualizarPerfilPessoaJuridicaRequest(String email, String senha, String nomeFantasia,
+                                      String razaoSocial, String cnpj, String endereco) {
+        this.email = email;
+        this.senha = senha;
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -1,15 +1,5 @@
 package com.gynguide.service;
 
-import com.gynguide.dto.EstabelecimentoDetalhesResponse;
-import com.gynguide.dto.EstabelecimentoRequest;
-import com.gynguide.dto.EstabelecimentoResponse;
-import com.gynguide.model.Estabelecimento;
-import com.gynguide.model.PessoaJuridica;
-import com.gynguide.repository.EstabelecimentoRepository;
-import com.gynguide.repository.PessoaJuridicaRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -20,7 +10,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.gynguide.dto.EstabelecimentoDetalhesResponse;
+import com.gynguide.dto.EstabelecimentoRequest;
+import com.gynguide.dto.EstabelecimentoResponse;
+import com.gynguide.model.Estabelecimento;
+import com.gynguide.model.PessoaJuridica;
+import com.gynguide.repository.EstabelecimentoRepository;
+import com.gynguide.repository.PessoaJuridicaRepository;
 
 @Service
 public class EstabelecimentoService {
@@ -94,49 +95,6 @@ public class EstabelecimentoService {
         // Retorna o primeiro estabelecimento (assumindo que cada pessoa jurídica tem apenas um)
         Estabelecimento estabelecimento = estabelecimentos.get(0);
         return converterParaDetalhesResponse(estabelecimento);
-    }
-
-    @Transactional(readOnly = true)
-    public EstabelecimentoDetalhesResponse buscarEstabelecimentoPorId(Long estabelecimentoId) {
-        Estabelecimento estabelecimento = estabelecimentoRepository.findById(estabelecimentoId)
-            .orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
-
-        // calcula media e numero de avaliacoes
-        java.util.List<com.gynguide.model.Avaliacao> avaliacoes = estabelecimento.getAvaliacoes();
-        Long numeroAvaliacoes = (long) avaliacoes.size();
-        Double mediaNotas = null;
-        if (!avaliacoes.isEmpty()) {
-            double soma = avaliacoes.stream().mapToInt(com.gynguide.model.Avaliacao::getNota).sum();
-            mediaNotas = soma / numeroAvaliacoes;
-        }
-
-        // converte avaliacoes para DTOs ordenadas por data desc
-        java.util.List<com.gynguide.dto.AvaliacaoResponse> avaliacoesDto = avaliacoes.stream()
-            .sorted((a,b) -> b.getDataAvaliacao().compareTo(a.getDataAvaliacao()))
-            .map(a -> new com.gynguide.dto.AvaliacaoResponse(
-                a.getId(),
-                a.getAutor() != null ? a.getAutor().getNome() : null,
-                a.getDataAvaliacao(),
-                a.getTexto(),
-                a.getNota()
-            ))
-            .collect(java.util.stream.Collectors.toList());
-
-        String nomeFantasia = estabelecimento.getProprietario() != null
-            ? estabelecimento.getProprietario().getNomeFantasia()
-            : null;
-
-        return new EstabelecimentoDetalhesResponse(
-            estabelecimento.getId(),
-            estabelecimento.getNome(),
-            estabelecimento.getEndereco(),
-            estabelecimento.getDescricao(),
-            estabelecimento.getImagemUrl(),
-            nomeFantasia,
-            mediaNotas,
-            numeroAvaliacoes,
-            avaliacoesDto
-        );
     }
 
     @Transactional(readOnly = true)

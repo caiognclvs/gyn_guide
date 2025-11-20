@@ -2,13 +2,7 @@ package com.gynguide.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CadastroPessoaJuridicaRequest {
     
     @NotBlank(message = "Email é obrigatório")
@@ -29,6 +23,18 @@ public class CadastroPessoaJuridicaRequest {
     
     @NotBlank(message = "Endereço é obrigatório")
     private String endereco;
+
+    public CadastroPessoaJuridicaRequest() {}
+
+    public CadastroPessoaJuridicaRequest(String email, String senha, String nomeFantasia,
+                                      String razaoSocial, String cnpj, String endereco) {
+        this.email = email;
+        this.senha = senha;
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+    }
 
     public String getEmail() {
         return email;

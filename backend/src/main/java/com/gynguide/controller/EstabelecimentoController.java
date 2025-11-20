@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/estabelecimentos")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class EstabelecimentoController {
     
     private final EstabelecimentoService estabelecimentoService;
@@ -36,16 +36,6 @@ public class EstabelecimentoController {
     public ResponseEntity<List<EstabelecimentoResponse>> listarTodosOrdenados() {
         List<EstabelecimentoResponse> estabelecimentos = estabelecimentoService.buscarTodosOrdenadosPorNome();
         return ResponseEntity.ok(estabelecimentos);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        try {
-            EstabelecimentoDetalhesResponse response = estabelecimentoService.buscarEstabelecimentoPorId(id);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
     
     @GetMapping("/meu-estabelecimento/{proprietarioId}")

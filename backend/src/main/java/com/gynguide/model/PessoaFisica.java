@@ -15,6 +15,12 @@ public class PessoaFisica extends Usuario {
     private LocalDate dataNascimento;
 
     public PessoaFisica() {}
+
+    public PessoaFisica(String email, String senha, String nome, LocalDate dataNascimento) {
+        super(email, senha);
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+    }
     
     public String getNome() {
         return nome;
