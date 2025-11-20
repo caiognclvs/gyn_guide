@@ -98,6 +98,13 @@ public class EstabelecimentoService {
     }
 
     @Transactional(readOnly = true)
+    public EstabelecimentoDetalhesResponse buscarEstabelecimentoPorId(Long id) {
+        return estabelecimentoRepository.findById(id)
+                .map(this::converterParaDetalhesResponse)
+                .orElse(null);
+    }
+
+    @Transactional(readOnly = true)
     public List<EstabelecimentoResponse> buscarTodosOrdenadosPorNome() {
         List<Estabelecimento> todos = estabelecimentoRepository.findAllWithAvaliacoesAndProprietario();
         return todos.stream()

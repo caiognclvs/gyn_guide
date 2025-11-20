@@ -1,74 +1,116 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import api from '../services/api'
-import '../App.css'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import api from '../services/api';
 
-function EstabelecimentoDetalhes() {
-  const { id } = useParams()
-  const [dados, setDados] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
+export default function EstabelecimentoDetalhes() {
+    const { id } = useParams();
+    const [estabelecimento, setEstabelecimento] = useState(null);
+    const [avaliacoes, setAvaliacoes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [nota, setNota] = useState(5);
+    const [comentario, setComentario] = useState('');
+    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
 
-  useEffect(() => {
-    carregar()
-  }, [id])
+    useEffect(() => {
+        async function load() {
+            setLoading(true);
+            try {
+                // tentativa de obter estabelecimento com avaliacoes juntas
+                const res = await api.get(`/estabelecimentos/${id}`);
+                const data = res.data || {};
+                // aceitar diferentes formatos: {estabelecimento, avaliacoes} ou diretamente objeto com avaliacoes
+                const estab = data.estabelecimento ?? data;
+                setEstabelecimento(estab);
 
-  const carregar = async () => {
-    try {
-      setLoading(true)
-      const response = await api.get(`/estabelecimentos/${id}`)
-      setDados(response.data)
-    } catch (err) {
-      console.error('Erro ao carregar detalhes:', err)
-    } finally {
-      setLoading(false)
+                if (data.avaliacoes) {
+                    setAvaliacoes([...data.avaliacoes].sort((a,b) => new Date(b.data) - new Date(a.data)));
+                } else {
+                    // fallback: buscar avaliações específicas
+                    const r2 = await api.get(`/avaliacoes/estabelecimento/${id}`);
+                    setAvaliacoes((r2.data || []).sort((a,b) => new Date(b.data) - new Date(a.data)));
+                }
+            } catch (err) {
+                console.error('Erro ao carregar estabelecimento/avaliacoes', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        load();
+    }, [id]);
+
+    async function handleEnviarAvaliacao(e) {
+        e.preventDefault();
+        if (!usuario || usuario.tipoUsuario !== 'PESSOA_FISICA') return;
+        try {
+            const payload = {
+                autorId: usuario.id,
+                estabelecimentoId: Number(id),
+                nota: Number(nota),
+                comentario: comentario || null
+            };
+            await api.post('/avaliacoes', payload);
+            // recarregar avaliacoes
+            const r = await api.get(`/avaliacoes/estabelecimento/${id}`);
+            setAvaliacoes((r.data || []).sort((a,b) => new Date(b.data) - new Date(a.data)));
+            setComentario('');
+            setNota(5);
+        } catch (err) {
+            console.error('Erro ao enviar avaliação', err);
+            alert('Erro ao enviar avaliação');
+        }
     }
-  }
 
-  if (loading) return <div style={{ textAlign: 'center', padding: '40px' }}>Carregando...</div>
-  if (!dados) return <div style={{ textAlign: 'center', padding: '40px' }}>Detalhes não encontrados.</div>
+    if (loading) return <div>Carregando...</div>;
+    if (!estabelecimento) return <div>Estabelecimento não encontrado.</div>;
 
-  return (
-    <div className="container">
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0', borderBottom: '1px solid #ddd', marginBottom: '30px' }}>
-        <h1>{dados.nome}</h1>
+    return (
         <div>
-          <button onClick={() => navigate('/home')} className="btn btn-secondary" style={{ width: 'auto', padding: '8px 20px' }}>Voltar</button>
-        </div>
-      </header>
+            <h1>{estabelecimento.nome}</h1>
+            {estabelecimento.nomeFantasia && <h2>{estabelecimento.nomeFantasia}</h2>}
+            {estabelecimento.imagemUrl && <img src={estabelecimento.imagemUrl} alt={estabelecimento.nome} style={{maxWidth: '400px'}} />}
+            <p><strong>Endereço:</strong> {estabelecimento.endereco}</p>
+            <p><strong>Descrição:</strong> {estabelecimento.descricao}</p>
 
-      <div className="card" style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <div style={{ padding: '20px' }}>
-          <h2 style={{ marginTop: 0 }}>{dados.nomeFantasia || dados.nome}</h2>
-          <p style={{ color: '#666' }}>{dados.endereco}</p>
-          <div style={{ marginTop: '16px', marginBottom: '16px' }}>
-            <strong>Média:</strong> {dados.mediaNotas !== null ? dados.mediaNotas.toFixed(1) : '—'}
-            {'  '}|{'  '}
-            <strong>Numero de avaliações:</strong> {dados.numeroAvaliacoes}
-          </div>
-          <div style={{ marginTop: '12px' }}>
-            <h3>Avaliações</h3>
-            {dados.avaliacoes && dados.avaliacoes.length > 0 ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '12px' }}>
-                {dados.avaliacoes.map(av => (
-                  <div key={av.id} style={{ border: '1px solid #eee', padding: '12px', borderRadius: '6px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <strong>{av.autorNome}</strong>
-                      <span style={{ color: '#666', fontSize: '12px' }}>{new Date(av.dataAvaliacao).toLocaleString()}</span>
-                    </div>
-                    <div style={{ marginBottom: '8px' }}>{av.texto}</div>
-                    <div>Nota: {av.nota} / 5</div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p style={{ color: '#666' }}>Nenhuma avaliação cadastrada.</p>
+            <section>
+                <h3>Avaliações</h3>
+                {avaliacoes.length === 0 ? (
+                    <p>Nenhuma avaliacao registrada ainda</p>
+                ) : (
+                    <ul>
+                        {avaliacoes.map(av => (
+                            <li key={av.id}>
+                                <div>
+                                                <strong>{av.autorNome ?? av.autor?.nome ?? 'Usuário'}</strong> — {new Date(av.dataAvaliacao).toLocaleString()}
+                                </div>
+                                <div>Nota: {av.nota}</div>
+                                {av.texto && <p>{av.texto}</p>}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </section>
+
+            {usuario && usuario.tipoUsuario === 'PESSOA_FISICA' && (
+                <section>
+                    <h3>Registrar Avaliação</h3>
+                    <form onSubmit={handleEnviarAvaliacao}>
+                        <label>
+                            Nota:
+                            <select value={nota} onChange={e => setNota(e.target.value)}>
+                                {[5,4,3,2,1].map(n => <option key={n} value={n}>{n}</option>)}
+                            </select>
+                        </label>
+                        <br />
+                        <label>
+                            Comentário:
+                            <br />
+                            <textarea value={comentario} onChange={e => setComentario(e.target.value)} rows={4} />
+                        </label>
+                        <br />
+                        <button type="submit">Enviar avaliação</button>
+                    </form>
+                </section>
             )}
-          </div>
         </div>
-      </div>
-    </div>
-  )
+    );
 }
-
-export default EstabelecimentoDetalhes

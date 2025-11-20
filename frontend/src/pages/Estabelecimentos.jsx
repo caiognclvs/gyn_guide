@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../services/api'
 import '../App.css'
 
@@ -57,6 +57,15 @@ function Estabelecimentos() {
           ))}
         </div>
       )}
+      <div>
+        {estabelecimentos.map(e => (
+          <div key={e.id} className="estabelecimento-row">
+            <Link to={`/estabelecimentos/${e.id}`}>
+              {e.nome} {e.nomeFantasia ? `(${e.nomeFantasia})` : ''}
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

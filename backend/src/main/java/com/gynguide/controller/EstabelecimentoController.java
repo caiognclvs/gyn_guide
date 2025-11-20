@@ -50,6 +50,19 @@ public class EstabelecimentoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarEstabelecimentoPorId(@PathVariable Long id) {
+        try {
+            EstabelecimentoDetalhesResponse response = estabelecimentoService.buscarEstabelecimentoPorId(id);
+            if (response == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estabelecimento não encontrado");
+            }
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     
     @PostMapping(value = "/meu-estabelecimento/{proprietarioId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> criarOuAtualizarEstabelecimento(
