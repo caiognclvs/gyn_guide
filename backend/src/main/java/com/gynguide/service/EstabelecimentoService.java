@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -127,7 +129,8 @@ public class EstabelecimentoService {
         // Se houver um arquivo enviado, salva no filesystem e define imagemUrl
         if (imagem != null && !imagem.isEmpty()) {
             try {
-                Path uploadsDir = Paths.get("./data/uploads");
+                // Usa um caminho absoluto baseado em user.dir para evitar trabalhar no diretório temporário do Tomcat
+                Path uploadsDir = Paths.get(System.getProperty("user.dir"), "data", "uploads").toAbsolutePath().normalize();
                 if (!Files.exists(uploadsDir)) {
                     Files.createDirectories(uploadsDir);
                 }
@@ -139,8 +142,11 @@ public class EstabelecimentoService {
                 }
                 String filename = UUID.randomUUID().toString() + extension;
                 Path target = uploadsDir.resolve(filename);
-                // salva o arquivo
-                imagem.transferTo(target.toFile());
+
+                // Copia o conteúdo do input stream para o arquivo destino. Evita problemas de rename entre volumes
+                try (InputStream in = imagem.getInputStream()) {
+                    Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
+                }
 
                 // Define a URL pública para acessar o arquivo
                 String fileUrl = "http://localhost:8080/uploads/" + filename;
