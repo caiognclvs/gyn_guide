@@ -20,6 +20,7 @@ function Perfil() {
       return
     }
     const usuarioObj = JSON.parse(usuarioSalvo)
+    console.log(usuarioObj)
     setUsuario(usuarioObj)
     carregarPerfil(usuarioObj)
   }, [navigate])

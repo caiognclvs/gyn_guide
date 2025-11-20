@@ -12,15 +12,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "estabelecimentos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Estabelecimento {
     
     @Id
@@ -45,6 +39,8 @@ public class Estabelecimento {
     
     @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Avaliacao> avaliacoes;
+
+    public Estabelecimento() {}
 
     public String getImagemUrl() {
         return imagemUrl;

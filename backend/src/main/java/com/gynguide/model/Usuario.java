@@ -1,12 +1,10 @@
 package com.gynguide.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
 @Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Data
 public abstract class Usuario {
     public Usuario() {}
     
