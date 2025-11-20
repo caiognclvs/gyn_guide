@@ -31,6 +31,12 @@ public class EstabelecimentoController {
             estabelecimentoService.buscarEstabelecimentosAleatorios(quantidade);
         return ResponseEntity.ok(estabelecimentos);
     }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<EstabelecimentoResponse>> listarTodosOrdenados() {
+        List<EstabelecimentoResponse> estabelecimentos = estabelecimentoService.buscarTodosOrdenadosPorNome();
+        return ResponseEntity.ok(estabelecimentos);
+    }
     
     @GetMapping("/meu-estabelecimento/{proprietarioId}")
     public ResponseEntity<?> buscarMeuEstabelecimento(@PathVariable Long proprietarioId) {

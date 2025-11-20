@@ -6,6 +6,7 @@ import CadastroPessoaJuridica from './pages/CadastroPessoaJuridica'
 import Home from './pages/Home'
 import Perfil from './pages/Perfil'
 import MeuEstabelecimento from './pages/MeuEstabelecimento'
+import Estabelecimentos from './pages/Estabelecimentos'
 import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/meu-estabelecimento" element={<MeuEstabelecimento />} />
+          <Route path="/estabelecimentos" element={<Estabelecimentos />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>

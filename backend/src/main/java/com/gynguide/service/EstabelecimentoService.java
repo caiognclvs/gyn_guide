@@ -95,6 +95,19 @@ public class EstabelecimentoService {
         Estabelecimento estabelecimento = estabelecimentos.get(0);
         return converterParaDetalhesResponse(estabelecimento);
     }
+
+    @Transactional(readOnly = true)
+    public List<EstabelecimentoResponse> buscarTodosOrdenadosPorNome() {
+        List<Estabelecimento> todos = estabelecimentoRepository.findAllWithAvaliacoesAndProprietario();
+        return todos.stream()
+                .sorted((a, b) -> {
+                    if (a.getNome() == null) return -1;
+                    if (b.getNome() == null) return 1;
+                    return a.getNome().compareToIgnoreCase(b.getNome());
+                })
+                .map(this::converterParaResponse)
+                .collect(Collectors.toList());
+    }
     
     @Transactional
     public EstabelecimentoDetalhesResponse criarOuAtualizarEstabelecimento(Long proprietarioId, EstabelecimentoRequest request) {

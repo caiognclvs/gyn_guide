@@ -208,7 +208,7 @@ function Home() {
 
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
         <button
-          onClick={carregarEstabelecimentos}
+          onClick={() => navigate('/estabelecimentos')}
           className="btn btn-primary"
           style={{ width: 'auto', padding: '10px 30px' }}
         >
