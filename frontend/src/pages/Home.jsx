@@ -127,17 +127,18 @@ function Home() {
           marginBottom: '30px'
         }}>
           {estabelecimentos.map((estabelecimento) => (
-            <div
-              key={estabelecimento.id}
+              <div
+                key={estabelecimento.id}
               style={{
                 background: 'white',
                 borderRadius: '8px',
                 overflow: 'hidden',
                 boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
                 transition: 'transform 0.2s, box-shadow 0.2s',
-                cursor: 'pointer'
+                  cursor: 'pointer'
               }}
-              onMouseEnter={(e) => {
+                onClick={() => navigate(`/estabelecimentos/${estabelecimento.id}`)}
+                onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)'
                 e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)'
               }}

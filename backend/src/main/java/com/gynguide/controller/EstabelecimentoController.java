@@ -37,6 +37,16 @@ public class EstabelecimentoController {
         List<EstabelecimentoResponse> estabelecimentos = estabelecimentoService.buscarTodosOrdenadosPorNome();
         return ResponseEntity.ok(estabelecimentos);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            EstabelecimentoDetalhesResponse response = estabelecimentoService.buscarEstabelecimentoPorId(id);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     
     @GetMapping("/meu-estabelecimento/{proprietarioId}")
     public ResponseEntity<?> buscarMeuEstabelecimento(@PathVariable Long proprietarioId) {
