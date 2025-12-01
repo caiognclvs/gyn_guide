@@ -21,33 +21,21 @@ public class AuthController {
     }
 
     @PostMapping("/cadastro/pessoa-fisica")
-    public ResponseEntity<?> cadastrarPessoaFisica(@Valid @RequestBody CadastroPessoaFisicaRequest request) {
-        try {
-            UsuarioResponse response = authService.cadastrarPessoaFisica(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<UsuarioResponse> cadastrarPessoaFisica(@Valid @RequestBody CadastroPessoaFisicaRequest request) {
+        UsuarioResponse response = authService.cadastrarPessoaFisica(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
     @PostMapping("/cadastro/pessoa-juridica")
-    public ResponseEntity<?> cadastrarPessoaJuridica(@Valid @RequestBody CadastroPessoaJuridicaRequest request) {
-        try {
-            UsuarioResponse response = authService.cadastrarPessoaJuridica(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<UsuarioResponse> cadastrarPessoaJuridica(@Valid @RequestBody CadastroPessoaJuridicaRequest request) {
+        UsuarioResponse response = authService.cadastrarPessoaJuridica(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
-        try {
-            UsuarioResponse response = authService.login(request);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+    public ResponseEntity<UsuarioResponse> login(@Valid @RequestBody LoginRequest request) {
+        UsuarioResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 }
 

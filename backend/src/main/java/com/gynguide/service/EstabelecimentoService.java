@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gynguide.dto.EstabelecimentoDetalhesResponse;
 import com.gynguide.dto.EstabelecimentoRequest;
 import com.gynguide.dto.EstabelecimentoResponse;
+import com.gynguide.exception.ArquivoException;
+import com.gynguide.exception.UsuarioNaoEncontradoException;
 import com.gynguide.model.Estabelecimento;
 import com.gynguide.model.PessoaJuridica;
 import com.gynguide.repository.EstabelecimentoRepository;
@@ -120,7 +122,7 @@ public class EstabelecimentoService {
     @Transactional
     public EstabelecimentoDetalhesResponse criarOuAtualizarEstabelecimento(Long proprietarioId, EstabelecimentoRequest request) {
         PessoaJuridica proprietario = pessoaJuridicaRepository.findById(proprietarioId)
-            .orElseThrow(() -> new RuntimeException("Pessoa jurídica não encontrada"));
+            .orElseThrow(() -> new UsuarioNaoEncontradoException(proprietarioId));
         
         List<Estabelecimento> estabelecimentosExistentes = estabelecimentoRepository.findByProprietarioId(proprietarioId);
         
@@ -173,7 +175,7 @@ public class EstabelecimentoService {
                 String fileUrl = "http://localhost:8080/uploads/" + filename;
                 request.setImagemUrl(fileUrl);
             } catch (IOException e) {
-                throw new RuntimeException("Erro ao salvar imagem: " + e.getMessage(), e);
+                throw new ArquivoException("Erro ao salvar imagem: " + e.getMessage(), e);
             }
         }
 

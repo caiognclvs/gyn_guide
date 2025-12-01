@@ -19,7 +19,7 @@ function Login() {
       localStorage.setItem('usuario', JSON.stringify(response.data))
       navigate('/home')
     } catch (err) {
-      setError(err.response?.data || 'Erro ao fazer login')
+      setError(err.response?.data?.message || err.response?.data || 'Erro ao fazer login')
     }
   }
 

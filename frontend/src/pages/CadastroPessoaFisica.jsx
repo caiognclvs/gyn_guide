@@ -37,7 +37,7 @@ function CadastroPessoaFisica() {
         navigate('/home')
       }, 1500)
     } catch (err) {
-      setError(err.response?.data || 'Erro ao cadastrar')
+      setError(err.response?.data?.message || err.response?.data || 'Erro ao cadastrar')
     }
   }
 

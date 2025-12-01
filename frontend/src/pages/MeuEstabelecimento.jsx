@@ -123,7 +123,7 @@ function MeuEstabelecimento() {
       setEditando(false)
       setSuccess(estabelecimento ? 'Estabelecimento atualizado com sucesso!' : 'Estabelecimento criado com sucesso!')
     } catch (err) {
-      setError(err.response?.data || 'Erro ao salvar estabelecimento')
+      setError(err.response?.data?.message || err.response?.data || 'Erro ao salvar estabelecimento')
     }
   }
 

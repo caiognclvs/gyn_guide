@@ -4,6 +4,9 @@ import com.gynguide.dto.AtualizarPerfilPessoaFisicaRequest;
 import com.gynguide.dto.AtualizarPerfilPessoaJuridicaRequest;
 import com.gynguide.dto.PerfilPessoaFisicaResponse;
 import com.gynguide.dto.PerfilPessoaJuridicaResponse;
+import com.gynguide.exception.CnpjJaCadastradoException;
+import com.gynguide.exception.EmailJaCadastradoException;
+import com.gynguide.exception.UsuarioNaoEncontradoException;
 import com.gynguide.model.PessoaFisica;
 import com.gynguide.model.PessoaJuridica;
 import com.gynguide.model.Usuario;
@@ -30,7 +33,7 @@ public class PerfilService {
     
     public PerfilPessoaFisicaResponse buscarPerfilPessoaFisica(Long id) {
         PessoaFisica pessoaFisica = pessoaFisicaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
         
         return new PerfilPessoaFisicaResponse(
             pessoaFisica.getId(),
@@ -42,7 +45,7 @@ public class PerfilService {
     
     public PerfilPessoaJuridicaResponse buscarPerfilPessoaJuridica(Long id) {
         PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
         
         return new PerfilPessoaJuridicaResponse(
             pessoaJuridica.getId(),
@@ -57,12 +60,12 @@ public class PerfilService {
     @Transactional
     public PerfilPessoaFisicaResponse atualizarPerfilPessoaFisica(Long id, AtualizarPerfilPessoaFisicaRequest request) {
         PessoaFisica pessoaFisica = pessoaFisicaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
         
         // Verifica se o email já está em uso por outro usuário
         if (!pessoaFisica.getEmail().equals(request.getEmail())) {
             if (usuarioRepository.existsByEmail(request.getEmail())) {
-                throw new RuntimeException("Email já cadastrado");
+                throw new EmailJaCadastradoException(request.getEmail());
             }
         }
         
@@ -86,19 +89,19 @@ public class PerfilService {
     @Transactional
     public PerfilPessoaJuridicaResponse atualizarPerfilPessoaJuridica(Long id, AtualizarPerfilPessoaJuridicaRequest request) {
         PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
         
         // Verifica se o email já está em uso por outro usuário
         if (!pessoaJuridica.getEmail().equals(request.getEmail())) {
             if (usuarioRepository.existsByEmail(request.getEmail())) {
-                throw new RuntimeException("Email já cadastrado");
+                throw new EmailJaCadastradoException(request.getEmail());
             }
         }
         
         // Verifica se o CNPJ já está em uso por outro usuário
         if (!pessoaJuridica.getCnpj().equals(request.getCnpj())) {
             if (pessoaJuridicaRepository.existsByCnpj(request.getCnpj())) {
-                throw new RuntimeException("CNPJ já cadastrado");
+                throw new CnpjJaCadastradoException(request.getCnpj());
             }
         }
         

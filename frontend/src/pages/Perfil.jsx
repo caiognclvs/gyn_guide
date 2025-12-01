@@ -73,7 +73,7 @@ function Perfil() {
       localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado))
       setUsuario(usuarioAtualizado)
     } catch (err) {
-      setError(err.response?.data || 'Erro ao atualizar perfil')
+      setError(err.response?.data?.message || err.response?.data || 'Erro ao atualizar perfil')
     }
   }
 

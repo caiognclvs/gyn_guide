@@ -22,47 +22,31 @@ public class PerfilController {
     }
     
     @GetMapping("/pessoa-fisica/{id}")
-    public ResponseEntity<?> buscarPerfilPessoaFisica(@PathVariable Long id) {
-        try {
-            PerfilPessoaFisicaResponse response = perfilService.buscarPerfilPessoaFisica(id);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<PerfilPessoaFisicaResponse> buscarPerfilPessoaFisica(@PathVariable Long id) {
+        PerfilPessoaFisicaResponse response = perfilService.buscarPerfilPessoaFisica(id);
+        return ResponseEntity.ok(response);
     }
     
     @GetMapping("/pessoa-juridica/{id}")
-    public ResponseEntity<?> buscarPerfilPessoaJuridica(@PathVariable Long id) {
-        try {
-            PerfilPessoaJuridicaResponse response = perfilService.buscarPerfilPessoaJuridica(id);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<PerfilPessoaJuridicaResponse> buscarPerfilPessoaJuridica(@PathVariable Long id) {
+        PerfilPessoaJuridicaResponse response = perfilService.buscarPerfilPessoaJuridica(id);
+        return ResponseEntity.ok(response);
     }
     
     @PutMapping("/pessoa-fisica/{id}")
-    public ResponseEntity<?> atualizarPerfilPessoaFisica(
+    public ResponseEntity<PerfilPessoaFisicaResponse> atualizarPerfilPessoaFisica(
             @PathVariable Long id,
             @Valid @RequestBody AtualizarPerfilPessoaFisicaRequest request) {
-        try {
-            PerfilPessoaFisicaResponse response = perfilService.atualizarPerfilPessoaFisica(id, request);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        PerfilPessoaFisicaResponse response = perfilService.atualizarPerfilPessoaFisica(id, request);
+        return ResponseEntity.ok(response);
     }
     
     @PutMapping("/pessoa-juridica/{id}")
-    public ResponseEntity<?> atualizarPerfilPessoaJuridica(
+    public ResponseEntity<PerfilPessoaJuridicaResponse> atualizarPerfilPessoaJuridica(
             @PathVariable Long id,
             @Valid @RequestBody AtualizarPerfilPessoaJuridicaRequest request) {
-        try {
-            PerfilPessoaJuridicaResponse response = perfilService.atualizarPerfilPessoaJuridica(id, request);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        PerfilPessoaJuridicaResponse response = perfilService.atualizarPerfilPessoaJuridica(id, request);
+        return ResponseEntity.ok(response);
     }
 }
 

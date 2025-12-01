@@ -4,6 +4,9 @@ import com.gynguide.dto.CadastroPessoaFisicaRequest;
 import com.gynguide.dto.CadastroPessoaJuridicaRequest;
 import com.gynguide.dto.LoginRequest;
 import com.gynguide.dto.UsuarioResponse;
+import com.gynguide.exception.CnpjJaCadastradoException;
+import com.gynguide.exception.CredenciaisInvalidasException;
+import com.gynguide.exception.EmailJaCadastradoException;
 import com.gynguide.model.PessoaFisica;
 import com.gynguide.model.PessoaJuridica;
 import com.gynguide.model.Usuario;
@@ -29,7 +32,7 @@ public class AuthService {
     @Transactional
     public UsuarioResponse cadastrarPessoaFisica(CadastroPessoaFisicaRequest request) {
         if (usuarioRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new EmailJaCadastradoException(request.getEmail());
         }
         
         PessoaFisica pessoaFisica = new PessoaFisica();
@@ -46,11 +49,11 @@ public class AuthService {
     @Transactional
     public UsuarioResponse cadastrarPessoaJuridica(CadastroPessoaJuridicaRequest request) {
         if (usuarioRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new EmailJaCadastradoException(request.getEmail());
         }
         
         if (pessoaJuridicaRepository.existsByCnpj(request.getCnpj())) {
-            throw new RuntimeException("CNPJ já cadastrado");
+            throw new CnpjJaCadastradoException(request.getCnpj());
         }
         
         PessoaJuridica pessoaJuridica = new PessoaJuridica();
@@ -68,10 +71,10 @@ public class AuthService {
     
     public UsuarioResponse login(LoginRequest request) {
         Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new RuntimeException("Email ou senha inválidos"));
+            .orElseThrow(() -> new CredenciaisInvalidasException());
         
         if (!usuario.getSenha().equals(request.getSenha())) {
-            throw new RuntimeException("Email ou senha inválidos");
+            throw new CredenciaisInvalidasException();
         }
         
         return UsuarioResponse.fromUsuario(usuario);

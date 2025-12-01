@@ -4,6 +4,8 @@ C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\CadastroPessoaFisicaRequest.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\UsuarioResponse.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\LoginRequest.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\EstabelecimentoNaoEncontradoException.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\UsuarioNaoEncontradoException.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\repository\PessoaFisicaRepository.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\repository\PessoaJuridicaRepository.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\GynGuideApplication.java
@@ -11,6 +13,7 @@ C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\AtualizarPerfilPessoaJuridicaRequest.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\service\AuthService.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\model\PessoaFisica.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\CnpjJaCadastradoException.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\controller\EstabelecimentoController.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\service\PerfilService.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\AtualizarPerfilPessoaFisicaRequest.java
@@ -18,14 +21,18 @@ C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\con
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\config\CorsConfig.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\config\FileStorageConfig.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\AvaliacaoResponse.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\CredenciaisInvalidasException.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\model\Avaliacao.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\EstabelecimentoRequest.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\ArquivoException.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\repository\AvaliacaoRepository.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\service\UsuarioService.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\EstabelecimentoDetalhesResponse.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\dto\PessoaFisicaResponse.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\controller\AuthController.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\GlobalExceptionHandler.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\model\Usuario.java
+C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\exception\EmailJaCadastradoException.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\model\PessoaJuridica.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\service\EstabelecimentoService.java
 C:\Users\Administrator\Projects\gyn_guide\backend\src\main\java\com\gynguide\repository\EstabelecimentoRepository.java

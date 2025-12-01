@@ -1,6 +1,8 @@
 package com.gynguide.controller;
 
 import com.gynguide.dto.AvaliacaoResponse;
+import com.gynguide.exception.EstabelecimentoNaoEncontradoException;
+import com.gynguide.exception.UsuarioNaoEncontradoException;
 import com.gynguide.model.Avaliacao;
 import com.gynguide.model.Estabelecimento;
 import com.gynguide.model.PessoaFisica;
@@ -117,10 +119,10 @@ public class AvaliacaoController {
     @PostMapping
     public ResponseEntity<AvaliacaoResponse> criarAvaliacao(@RequestBody CreateAvaliacaoRequest request) {
         PessoaFisica autor = pessoaFisicaRepository.findById(request.getAutorId())
-                .orElseThrow(() -> new RuntimeException("Autor (pessoa física) não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(request.getAutorId()));
 
         Estabelecimento estabelecimento = estabelecimentoRepository.findById(request.getEstabelecimentoId())
-                .orElseThrow(() -> new RuntimeException("Estabelecimento não encontrado"));
+                .orElseThrow(() -> new EstabelecimentoNaoEncontradoException(request.getEstabelecimentoId()));
 
         Avaliacao avaliacao = new Avaliacao();
         avaliacao.setAutor(autor);
