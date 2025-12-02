@@ -9,7 +9,6 @@ public class FileStorageConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Serve arquivos da pasta ./data/uploads através de /uploads/**
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:./data/uploads/");
     }

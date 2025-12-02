@@ -48,9 +48,8 @@ function MeuEstabelecimento() {
       })
     } catch (error) {
       if (error.response?.status === 404) {
-        // Estabelecimento ainda não foi criado
         setEstabelecimento(null)
-        setEditando(true) // Já abre em modo de edição para criar
+        setEditando(true)
       } else {
         console.error('Erro ao carregar estabelecimento:', error)
         setError('Erro ao carregar informações do estabelecimento')
@@ -72,7 +71,6 @@ function MeuEstabelecimento() {
     if (!file) return
     setSelectedFile(file)
     setPreviewUrl(URL.createObjectURL(file))
-    // clear any imagemUrl string when a file is chosen
     setFormData(prev => ({ ...prev, imagemUrl: '' }))
   }
 
@@ -106,12 +104,10 @@ function MeuEstabelecimento() {
     try {
       const endpoint = `/estabelecimentos/meu-estabelecimento/${usuario.id}`
       const method = estabelecimento ? 'put' : 'post'
-      // Monta FormData para suportar upload de arquivo
       const payload = new FormData()
       payload.append('nome', formData.nome)
       payload.append('endereco', formData.endereco)
       if (formData.descricao) payload.append('descricao', formData.descricao)
-      // Se o usuário escolheu um arquivo envia como 'imagem', caso contrário envia imagemUrl (pode estar vazio)
       if (selectedFile) {
         payload.append('imagem', selectedFile)
       } else if (formData.imagemUrl) {
@@ -137,7 +133,6 @@ function MeuEstabelecimento() {
       })
       setEditando(false)
     } else {
-      // Se não tem estabelecimento, volta para home
       navigate('/home')
     }
     setError('')

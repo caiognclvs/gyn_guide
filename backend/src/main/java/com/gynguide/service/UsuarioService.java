@@ -2,8 +2,6 @@ package com.gynguide.service;
 
 import com.gynguide.dto.PessoaFisicaResponse;
 import com.gynguide.dto.PessoaJuridicaResponse;
-import com.gynguide.model.PessoaFisica;
-import com.gynguide.model.PessoaJuridica;
 import com.gynguide.repository.PessoaFisicaRepository;
 import com.gynguide.repository.PessoaJuridicaRepository;
 import org.springframework.stereotype.Service;

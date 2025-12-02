@@ -15,7 +15,6 @@ function Login() {
 
     try {
       const response = await api.post('/auth/login', { email, senha })
-      // Salvar informações do usuário (em produção, usar token JWT)
       localStorage.setItem('usuario', JSON.stringify(response.data))
       navigate('/home')
     } catch (err) {

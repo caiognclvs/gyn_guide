@@ -29,7 +29,6 @@ function MinhasAvaliacoes() {
     try {
       setLoading(true)
       const response = await api.get(`/avaliacoes/minhas/${autorId}`)
-      // response is expected to be ordered by date desc from backend
       setAvaliacoes(response.data)
     } catch (err) {
       console.error('Erro ao carregar avaliações:', err)

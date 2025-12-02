@@ -9,7 +9,6 @@ import com.gynguide.exception.EmailJaCadastradoException;
 import com.gynguide.exception.UsuarioNaoEncontradoException;
 import com.gynguide.model.PessoaFisica;
 import com.gynguide.model.PessoaJuridica;
-import com.gynguide.model.Usuario;
 import com.gynguide.repository.PessoaFisicaRepository;
 import com.gynguide.repository.PessoaJuridicaRepository;
 import com.gynguide.repository.UsuarioRepository;
@@ -62,7 +61,6 @@ public class PerfilService {
         PessoaFisica pessoaFisica = pessoaFisicaRepository.findById(id)
             .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
         
-        // Verifica se o email já está em uso por outro usuário
         if (!pessoaFisica.getEmail().equals(request.getEmail())) {
             if (usuarioRepository.existsByEmail(request.getEmail())) {
                 throw new EmailJaCadastradoException(request.getEmail());
@@ -71,7 +69,7 @@ public class PerfilService {
         
         pessoaFisica.setEmail(request.getEmail());
         if (request.getSenha() != null && !request.getSenha().trim().isEmpty()) {
-            pessoaFisica.setSenha(request.getSenha()); // Em produção, usar BCrypt
+            pessoaFisica.setSenha(request.getSenha());
         }
         pessoaFisica.setNome(request.getNome());
         pessoaFisica.setDataNascimento(request.getDataNascimento());
@@ -91,14 +89,12 @@ public class PerfilService {
         PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.findById(id)
             .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
         
-        // Verifica se o email já está em uso por outro usuário
         if (!pessoaJuridica.getEmail().equals(request.getEmail())) {
             if (usuarioRepository.existsByEmail(request.getEmail())) {
                 throw new EmailJaCadastradoException(request.getEmail());
             }
         }
         
-        // Verifica se o CNPJ já está em uso por outro usuário
         if (!pessoaJuridica.getCnpj().equals(request.getCnpj())) {
             if (pessoaJuridicaRepository.existsByCnpj(request.getCnpj())) {
                 throw new CnpjJaCadastradoException(request.getCnpj());
@@ -107,7 +103,7 @@ public class PerfilService {
         
         pessoaJuridica.setEmail(request.getEmail());
         if (request.getSenha() != null && !request.getSenha().trim().isEmpty()) {
-            pessoaJuridica.setSenha(request.getSenha()); // Em produção, usar BCrypt
+            pessoaJuridica.setSenha(request.getSenha());
         }
         pessoaJuridica.setNomeFantasia(request.getNomeFantasia());
         pessoaJuridica.setRazaoSocial(request.getRazaoSocial());

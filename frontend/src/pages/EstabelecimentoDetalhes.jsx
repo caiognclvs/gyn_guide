@@ -15,17 +15,14 @@ export default function EstabelecimentoDetalhes() {
         async function load() {
             setLoading(true);
             try {
-                // tentativa de obter estabelecimento com avaliacoes juntas
                 const res = await api.get(`/estabelecimentos/${id}`);
                 const data = res.data || {};
-                // aceitar diferentes formatos: {estabelecimento, avaliacoes} ou diretamente objeto com avaliacoes
                 const estab = data.estabelecimento ?? data;
                 setEstabelecimento(estab);
 
                 if (data.avaliacoes) {
                     setAvaliacoes([...data.avaliacoes].sort((a,b) => new Date(b.data) - new Date(a.data)));
                 } else {
-                    // fallback: buscar avaliações específicas
                     const r2 = await api.get(`/avaliacoes/estabelecimento/${id}`);
                     setAvaliacoes((r2.data || []).sort((a,b) => new Date(b.data) - new Date(a.data)));
                 }
@@ -49,7 +46,6 @@ export default function EstabelecimentoDetalhes() {
                 comentario: comentario || null
             };
             await api.post('/avaliacoes', payload);
-            // recarregar avaliacoes
             const r = await api.get(`/avaliacoes/estabelecimento/${id}`);
             setAvaliacoes((r.data || []).sort((a,b) => new Date(b.data) - new Date(a.data)));
             setComentario('');

@@ -65,7 +65,6 @@ function Perfil() {
       setEditando(false)
       setSuccess('Perfil atualizado com sucesso!')
       
-      // Atualizar dados do usuário no localStorage
       const usuarioAtualizado = {
         ...usuario,
         email: response.data.email

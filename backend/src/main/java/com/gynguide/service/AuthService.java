@@ -37,7 +37,7 @@ public class AuthService {
         
         PessoaFisica pessoaFisica = new PessoaFisica();
         pessoaFisica.setEmail(request.getEmail());
-        pessoaFisica.setSenha(request.getSenha()); // Em produção, usar BCrypt
+        pessoaFisica.setSenha(request.getSenha());
         pessoaFisica.setTipoUsuario(Usuario.TipoUsuario.PESSOA_FISICA);
         pessoaFisica.setNome(request.getNome());
         pessoaFisica.setDataNascimento(request.getDataNascimento());
@@ -58,7 +58,7 @@ public class AuthService {
         
         PessoaJuridica pessoaJuridica = new PessoaJuridica();
         pessoaJuridica.setEmail(request.getEmail());
-        pessoaJuridica.setSenha(request.getSenha()); // Em produção, usar BCrypt
+        pessoaJuridica.setSenha(request.getSenha());
         pessoaJuridica.setTipoUsuario(Usuario.TipoUsuario.PESSOA_JURIDICA);
         pessoaJuridica.setNomeFantasia(request.getNomeFantasia());
         pessoaJuridica.setRazaoSocial(request.getRazaoSocial());

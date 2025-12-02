@@ -9,7 +9,7 @@ public class AtualizarPerfilPessoaJuridicaRequest {
     @Email(message = "Email deve ser válido")
     private String email;
     
-    private String senha; // Opcional - se vazio, não atualiza
+    private String senha;
     
     @NotBlank(message = "Nome fantasia é obrigatório")
     private String nomeFantasia;

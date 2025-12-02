@@ -45,10 +45,8 @@ public class EstabelecimentoService {
             return Collections.emptyList();
         }
         
-        // Embaralha a lista para garantir aleatoriedade
         Collections.shuffle(todosEstabelecimentos);
         
-        // Pega os primeiros N estabelecimentos (ou todos se houver menos que N)
         int quantidadeParaRetornar = Math.min(quantidade, todosEstabelecimentos.size());
         List<Estabelecimento> estabelecimentosSelecionados = 
             todosEstabelecimentos.subList(0, quantidadeParaRetornar);
@@ -91,10 +89,9 @@ public class EstabelecimentoService {
         List<Estabelecimento> estabelecimentos = estabelecimentoRepository.findByProprietarioId(proprietarioId);
         
         if (estabelecimentos.isEmpty()) {
-            return null; // Não tem estabelecimento cadastrado ainda
+            return null;
         }
         
-        // Retorna o primeiro estabelecimento (assumindo que cada pessoa jurídica tem apenas um)
         Estabelecimento estabelecimento = estabelecimentos.get(0);
         return converterParaDetalhesResponse(estabelecimento);
     }
@@ -129,11 +126,9 @@ public class EstabelecimentoService {
         Estabelecimento estabelecimento;
         
         if (estabelecimentosExistentes.isEmpty()) {
-            // Criar novo estabelecimento
             estabelecimento = new Estabelecimento();
             estabelecimento.setProprietario(proprietario);
         } else {
-            // Atualizar estabelecimento existente
             estabelecimento = estabelecimentosExistentes.get(0);
         }
         
@@ -149,10 +144,8 @@ public class EstabelecimentoService {
 
     @Transactional
     public EstabelecimentoDetalhesResponse criarOuAtualizarEstabelecimento(Long proprietarioId, EstabelecimentoRequest request, MultipartFile imagem) {
-        // Se houver um arquivo enviado, salva no filesystem e define imagemUrl
         if (imagem != null && !imagem.isEmpty()) {
             try {
-                // Usa um caminho absoluto baseado em user.dir para evitar trabalhar no diretório temporário do Tomcat
                 Path uploadsDir = Paths.get(System.getProperty("user.dir"), "data", "uploads").toAbsolutePath().normalize();
                 if (!Files.exists(uploadsDir)) {
                     Files.createDirectories(uploadsDir);
@@ -166,12 +159,10 @@ public class EstabelecimentoService {
                 String filename = UUID.randomUUID().toString() + extension;
                 Path target = uploadsDir.resolve(filename);
 
-                // Copia o conteúdo do input stream para o arquivo destino. Evita problemas de rename entre volumes
                 try (InputStream in = imagem.getInputStream()) {
                     Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
                 }
 
-                // Define a URL pública para acessar o arquivo
                 String fileUrl = "http://localhost:8080/uploads/" + filename;
                 request.setImagemUrl(fileUrl);
             } catch (IOException e) {
@@ -179,7 +170,6 @@ public class EstabelecimentoService {
             }
         }
 
-        // Reaproveita o fluxo existente
         return criarOuAtualizarEstabelecimento(proprietarioId, request);
     }
     

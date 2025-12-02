@@ -13,7 +13,7 @@ public class AtualizarPerfilPessoaFisicaRequest {
     @Email(message = "Email deve ser válido")
     private String email;
     
-    private String senha; // Opcional - se vazio, não atualiza
+    private String senha;
     
     @NotBlank(message = "Nome é obrigatório")
     private String nome;

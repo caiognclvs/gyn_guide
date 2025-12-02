@@ -5,7 +5,6 @@ import com.gynguide.dto.EstabelecimentoRequest;
 import com.gynguide.dto.EstabelecimentoResponse;
 import com.gynguide.exception.EstabelecimentoNaoEncontradoException;
 import com.gynguide.service.EstabelecimentoService;
-import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

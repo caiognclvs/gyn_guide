@@ -57,15 +57,6 @@ function Estabelecimentos() {
           ))}
         </div>
       )}
-      <div>
-        {estabelecimentos.map(e => (
-          <div key={e.id} className="estabelecimento-row">
-            <Link to={`/estabelecimentos/${e.id}`}>
-              {e.nome} {e.nomeFantasia ? `(${e.nomeFantasia})` : ''}
-            </Link>
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
